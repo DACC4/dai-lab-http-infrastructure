@@ -10,6 +10,28 @@ docker build -t dai_http_static:latest .
 docker run -p 80:80 dai_http_static:latest
 ```
 
+## Docker Compose
+### Overview
+The following `docker-compose.yaml` file defines a Docker Compose configuration to set up a static website container named `static_app`.
+
+### File Information
+- **Version:** 3.8
+
+## Services
+### `static_app`
+This service defines a Docker container for a static web application.
+
+#### Configuration Details
+- **Build:** Specifies to build the Docker image using the local directory (denoted by `.`) containing the necessary application files.
+- **Ports:** Maps the host's port `80` to the container's port `80`, allowing access to the static application through the host machine.
+
+#### Usage
+To deploy and run this service, execute the following command in the directory containing this `docker-compose.yaml` file:
+
+```bash
+docker-compose up
+```
+
 ## NGINX Configuration Documentation
 
 ### `user nobody;`
