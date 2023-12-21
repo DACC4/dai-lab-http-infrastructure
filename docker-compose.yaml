@@ -1,16 +1,19 @@
 version: "3.8"
 
 services:
-  todo_api:
-    build: ./todo_api/
-    labels:
-      - "traefik.http.routers.todo_api.rule=Host(`todo_api.docker.localhost`)"
-      - "traefik.http.services.todo_api.loadbalancer.server.port=7070"
 
   static_app:
     build: ./static_web/
     labels:
-      - "traefik.http.routers.static_web.rule=Host(`static_web.docker.localhost`)"
+      - "traefik.http.routers.static_web.rule=Host(`localhost`)"
+
+  todo_api:
+    build: ./todo_api/
+    labels:
+      - "traefik.http.routers.todo_api.rule=Host(`localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.services.todo_api.loadbalancer.server.port=7070"
+      - "traefik.http.middlewares.todo_api_stripprefix.stripprefix.prefixes=/api"
+      - "traefik.http.routers.todo_api.middlewares=todo_api_stripprefix"
 
   reverse_proxy:
     # The official v2 Traefik docker image
