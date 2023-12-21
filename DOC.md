@@ -25,3 +25,10 @@ The dashboard provides:
 - Real-time monitoring of routed services and their health status.
 - Visualization of the request routing and the configuration of middlewares, services, and routers.
 - Ability to observe dynamic changes in the environment as Traefik automatically updates its configuration in response to Docker events.
+
+### Scaling instances using Traefik
+Start the docker in detached mode to easily run commands:
+`docker compose up -d`
+Use the scale argument to specify how many instances you want to run of each service:
+`docker compose scale todo_api=3 static_app=2`
+If the value is less than the current number of instances, the extra instances will be stopped. If the value is greater than the current number of instances, new instances will be created.
