@@ -14,12 +14,16 @@ services:
       - "traefik.http.services.todo_api.loadbalancer.server.port=7070"
       - "traefik.http.middlewares.todo_api_stripprefix.stripprefix.prefixes=/api"
       - "traefik.http.routers.todo_api.middlewares=todo_api_stripprefix"
+      ## Sticky session
+      - "traefik.http.services.todo_api.loadbalancer.sticky.cookie=true"
+      - "traefik.http.services.todo_api.loadbalancer.sticky.cookie.name=todo_api_sticky"
+
 
   reverse_proxy:
     # The official v2 Traefik docker image
     image: traefik:v2.10
     # Enables the web UI and tells Traefik to listen to docker
-    command: --api.insecure=true --providers.docker
+    command: --api.insecure=true --providers.docker --accesslog=true
     ports:
       # The HTTP port
       - "80:80"

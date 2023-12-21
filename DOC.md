@@ -32,3 +32,16 @@ Start the docker in detached mode to easily run commands:
 Use the scale argument to specify how many instances you want to run of each service:
 `docker compose scale todo_api=3 static_app=2`
 If the value is less than the current number of instances, the extra instances will be stopped. If the value is greater than the current number of instances, new instances will be created.
+
+### Load Balancing
+#### Sticky Sessions
+Sticky sessions are enabled for the `todo_api` service. This ensures that requests from the same client are always routed to the same instance of the service. This is useful for maintaining session state, for example, when a user is logged in to a web application. To test this, start the docker in detached mode to easily run commands and scale up the `todo_api` service:
+`docker compose up -d`
+`docker compose scale todo_api=3`
+Then, navigate to `http://localhost/api/todos` in a web browser and observe the logs in the console. Refresh the page a few times and notice that the requests are always routed to the same instance of the service. Clear the cookie and reload, it will be routed to a different instance. Refresh a few times and notice that the requests are always routed to the same instance of the service.
+
+#### Round Robin
+Round robin load balancing is enabled for the `static_app` service. This ensures that requests are distributed evenly across all instances of the service. To test this, start the docker in detached mode to easily run commands and scale up the `static_app` service:
+`docker compose up -d`
+`docker compose scale static_app=2`
+Then, navigate to `http://localhost` in a web browser and observe the logs in the console. Refresh the page a few times and notice that the requests are routed to different instances of the service.
