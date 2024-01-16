@@ -1,0 +1,23 @@
+---
+# Dynamic config
+tls:
+  certificates:
+    - certFile: /etc/traefik/certificates/cert.pem
+      keyFile: /etc/traefik/certificates/key.pem
+  stores:
+    default: {}
+  options:
+    default:
+      minVersion: VersionTLS13
+
+http:
+  middlewares:
+    sts:
+      headers:
+        stsSeconds: 63072000
+        stsIncludeSubdomains: true
+        stsPreload: true
+    todo_api_stripprefix:
+      stripPrefix:
+        prefixes:
+          - /api

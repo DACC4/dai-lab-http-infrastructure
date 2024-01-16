@@ -1,0 +1,33 @@
+---
+# Static config
+global:
+  checkNewVersion: true
+
+log:
+  level: INFO
+
+api:
+  insecure: true
+  dashboard: true
+
+# enable ping so the `traefik healthcheck` works
+ping: {}
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    address: ":443"
+
+providers:
+  file:
+    fileName: /etc/traefik/dyn.yaml
+    watch: true
+  docker:
+    exposedByDefault: true
