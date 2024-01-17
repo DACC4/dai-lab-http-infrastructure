@@ -4,8 +4,6 @@ services:
 
   static_app:
     build: ./static_web/
-    deploy:
-      replicas: 2
     labels:
       # HTTPS
       - "traefik.http.routers.static_web.rule=Host(`localhost`)"

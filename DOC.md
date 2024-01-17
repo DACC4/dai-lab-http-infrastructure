@@ -1,4 +1,9 @@
 # Documentation
+## Static Website
+The details of the static website are in the `./static_web/` directory. [here](./static_web/README.md)
+
+## Todo API
+The details of the todo api are in the `./todo_api/` directory. [here](./todo_api/README.md)
 
 ## Traefik
 ### Implementation and Configuration Details
@@ -32,6 +37,7 @@ Start the docker in detached mode to easily run commands:
 Use the scale argument to specify how many instances you want to run of each service:
 `docker compose scale todo_api=3 static_app=2`
 If the value is less than the current number of instances, the extra instances will be stopped. If the value is greater than the current number of instances, new instances will be created.
+In the `docker-compose.yml` file, the `todo_api` service is configured to start with 2 instances using the `scale` argument.
 
 ### Load Balancing
 #### Sticky Sessions
