@@ -255,9 +255,9 @@ The goal of this step is to deploy or develop a Web app that can be used to moni
 
 ### Acceptance criteria
 
-- [ ] You can do a demo to show the Management UI and manage the containers of your infrastructure.
-- [ ] You have **documented** how to use your solution.
-- [ ] You have **documented** your configuration in your report.
+- [x] You can do a demo to show the Management UI and manage the containers of your infrastructure.
+- [x] You have **documented** how to use your solution.
+- [x] You have **documented** your configuration in your report.
 
 
 Optional step 2: Integration API - static Web site
@@ -275,7 +275,7 @@ The modern way to make such requests is to use the [JavaScript Fetch API](https:
 
 ### Acceptance criteria
 
-- [ ] You have added JavaScript code to your static Web page to make at least a GET request to the API server.
-- [ ] You can do a demo where you show that the API is called and the result is displayed on the page.
-- [ ] You have **documented** your implementation in your report.
+- [x] You have added JavaScript code to your static Web page to make at least a GET request to the API server.
+- [x] You can do a demo where you show that the API is called and the result is displayed on the page.
+- [x] You have **documented** your implementation in your report.
 

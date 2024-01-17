@@ -4,6 +4,8 @@ services:
 
   static_app:
     build: ./static_web/
+    deploy:
+      replicas: 2
     labels:
       # HTTPS
       - "traefik.http.routers.static_web.rule=Host(`localhost`)"
@@ -13,6 +15,8 @@ services:
 
   todo_api:
     build: ./todo_api/
+    deploy:
+      replicas: 2
     labels:
       - "traefik.http.services.todo_api.loadbalancer.server.port=7070"
 
@@ -46,3 +50,15 @@ services:
       # Mounts the volume to the traefik conf files
       - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
       - ./traefik/dyn.yaml:/etc/traefik/dyn.yaml
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9443:9443
+    volumes:
+      - data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+volumes:
+  data:

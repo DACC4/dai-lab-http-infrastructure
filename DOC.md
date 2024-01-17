@@ -52,3 +52,11 @@ A self-signed certificate is used for HTTPS. This is not recommended for product
 Two config files have been created: `traefik.yml` and `dyn.yml`. The `traefik.yml` file contains the static traefik configuration and the entry points definition. The `dyn.yml` file contains the dynamic traefik configuration, including the middlewares and the TLS certificate configuration.
 
 The entry point `web` listens on port 80, and redirects traffic to the entry point `websecure` on port 443. The `websecure` entry point is configured to use the certificate pem files. Both the 'static_app' and 'todo_api' services are configured to use the `websecure` entry point.
+
+## Management UI
+We use portainer as a management UI for docker. It is a lightweight, open source, and easy to use tool. It provides a web interface for managing docker containers, images, networks, and volumes. It also provides a dashboard for monitoring the health of the docker environment. Portainer is implemented as a docker container in this environment. It is configured to listen on port 9443. 
+
+To access the UI, navigate to `https://localhost:9443` in a web browser. You'll be prompted to create an admin user. Once you've created the user, you can log in and start managing your docker environment. Connect to the local docker environment by selecting the `Local` option.
+
+## Static Web using api
+We added a static web page that uses the todo api. This page is accessible at the url `https://localhost/todos.html`. The page uses the javascript FetchAPI to make requests to the todo api.

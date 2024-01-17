@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Todo API Client</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Todo API Client</h1>
+
+        <!-- Create Todo -->
+        <input type="text" id="newTodoTask" placeholder="New Todo Task">
+        <button id="createTodo">Create Todo</button>
+
+        <!-- Load Todos -->
+        <button id="loadTodos">Load Todos</button>
+        <ul id="todoList"></ul>
+
+        <hr>
+
+        <!-- Update Todo -->
+        <input type="text" id="updateTodoId" placeholder="Todo ID to Update">
+        <input type="text" id="updateTodoTask" placeholder="Updated Task">
+        <input type="checkbox" id="updateTodoCompleted" placeholder="Updated Completed">
+        <button id="updateTodo">Update Todo</button>
+
+        <br>
+
+        <!-- Delete Todo -->
+        <input type="text" id="deleteTodoId" placeholder="Todo ID to Delete">
+        <button id="deleteTodo">Delete Todo</button>
+    </div>
+    
+    <script>
+        document.getElementById('loadTodos').addEventListener('click', loadTodos);
+        document.getElementById('createTodo').addEventListener('click', createTodo);
+        document.getElementById('updateTodo').addEventListener('click', updateTodo);
+        document.getElementById('deleteTodo').addEventListener('click', deleteTodo);
+
+        function loadTodos() {
+            fetch('https://localhost/api/todos')
+                .then(response => response.json())
+                .then(todos => {
+                    const listElement = document.getElementById('todoList');
+                    listElement.innerHTML = ''; // Clear existing items
+                    todos.forEach(todo => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `ID: ${todo.id}, Task: ${todo.task}, Completed: ${todo.completed}`;
+                        listElement.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function createTodo() {
+            const task = document.getElementById('newTodoTask').value;
+            fetch('https://localhost/api/todos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ task: task, completed: false })
+            })
+            .then(response => response.json())
+            .then(todo => {
+                console.log('Created:', todo);
+                loadTodos(); // Reload the list
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function updateTodo() {
+            const id = document.getElementById('updateTodoId').value;
+            const task = document.getElementById('updateTodoTask').value;
+            const completed = document.getElementById('updateTodoCompleted').checked;
+            fetch(`https://localhost/api/todos/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ task: task, completed: completed })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Updated Todo ID:', id);
+                    loadTodos(); // Reload the list
+                } else {
+                    console.error('Update failed');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function deleteTodo() {
+            const id = document.getElementById('deleteTodoId').value;
+            fetch(`https://localhost/api/todos/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Deleted Todo ID:', id);
+                    loadTodos(); // Reload the list
+                } else {
+                    console.error('Delete failed');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
