@@ -45,3 +45,10 @@ Round robin load balancing is enabled for the `static_app` service. This ensures
 `docker compose up -d`
 `docker compose scale static_app=2`
 Then, navigate to `http://localhost` in a web browser and observe the logs in the console. Refresh the page a few times and notice that the requests are routed to different instances of the service.
+
+### HTTPS 
+A self-signed certificate is used for HTTPS. This is not recommended for production environments, but it is sufficient for testing purposes. The certificate pem files have been uploaded to traefik. 
+
+Two config files have been created: `traefik.yml` and `dyn.yml`. The `traefik.yml` file contains the static traefik configuration and the entry points definition. The `dyn.yml` file contains the dynamic traefik configuration, including the middlewares and the TLS certificate configuration.
+
+The entry point `web` listens on port 80, and redirects traffic to the entry point `websecure` on port 443. The `websecure` entry point is configured to use the certificate pem files. Both the 'static_app' and 'todo_api' services are configured to use the `websecure` entry point.
